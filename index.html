@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Trader — SNIF-OFF 5.1 · Complete Guide</title>
+<meta name="description" content="The complete educational handbook for Smart Trader SNIF-OFF 5.1 Trade Finder indicator by Ata Sabancı. Learn every feature, every alert, every setting.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg-deep:#0a0b0f;--bg-card:#12141c;--bg-card-hover:#181b26;--bg-surface:#1a1d28;
+  --border:#1f2233;--border-accent:#2a2d44;
+  --text-primary:#e8e9ed;--text-secondary:#8b8fa3;--text-muted:#565a6e;
+  --green:#06d6a0;--red:#ef476f;--gold:#ffd166;--cyan:#00d4ff;--purple:#a78bfa;
+  --green-dim:rgba(6,214,160,.12);--red-dim:rgba(239,71,111,.12);
+  --gold-dim:rgba(255,209,102,.12);--cyan-dim:rgba(0,212,255,.12);--purple-dim:rgba(167,139,250,.12);
+  --sidebar-w:280px;--header-h:60px;
+  --font-display:'Playfair Display',Georgia,serif;
+  --font-body:'DM Sans',system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',monospace;
+  --ease:cubic-bezier(.4,0,.2,1);
+}
+html{scroll-behavior:smooth;font-size:16px;-webkit-text-size-adjust:100%}
+body{font-family:var(--font-body);background:var(--bg-deep);color:var(--text-primary);line-height:1.7;overflow-x:hidden}
+::selection{background:var(--cyan);color:var(--bg-deep)}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg-deep)}
+::-webkit-scrollbar-thumb{background:var(--border-accent);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--text-muted)}
+
+/* ── Header ── */
+.site-header{position:fixed;top:0;left:0;right:0;height:var(--header-h);background:rgba(10,11,15,.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);z-index:100;display:flex;align-items:center;padding:0 24px}
+.header-brand{display:flex;align-items:center;gap:12px}
+.header-brand .logo-mark{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,var(--cyan),var(--green));display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;color:var(--bg-deep);font-family:var(--font-mono)}
+.header-brand h1{font-family:var(--font-body);font-size:15px;font-weight:600;letter-spacing:.02em}
+.header-brand h1 span{color:var(--text-muted);font-weight:400;margin-left:6px;font-size:13px}
+.header-actions{margin-left:auto;display:flex;align-items:center;gap:12px}
+.btn-tv{display:inline-flex;align-items:center;gap:8px;padding:8px 18px;border-radius:8px;background:linear-gradient(135deg,var(--cyan),var(--green));color:var(--bg-deep);font-weight:600;font-size:13px;text-decoration:none;transition:all .25s var(--ease);border:none;cursor:pointer}
+.btn-tv:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(0,212,255,.3)}
+.btn-outline{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;background:transparent;color:var(--text-secondary);font-weight:500;font-size:13px;text-decoration:none;border:1px solid var(--border);transition:all .25s var(--ease)}
+.btn-outline:hover{border-color:var(--text-muted);color:var(--text-primary)}
+.hamburger{display:none;background:none;border:none;color:var(--text-primary);cursor:pointer;padding:8px}
+.hamburger svg{width:24px;height:24px}
+
+/* ── Sidebar ── */
+.sidebar{position:fixed;top:var(--header-h);left:0;width:var(--sidebar-w);height:calc(100vh - var(--header-h));background:var(--bg-card);border-right:1px solid var(--border);overflow-y:auto;z-index:90;padding:20px 0;transition:transform .3s var(--ease)}
+.sidebar-search{padding:0 16px 16px;position:sticky;top:0;background:var(--bg-card);z-index:2}
+.sidebar-search input{width:100%;padding:10px 14px 10px 38px;border-radius:8px;border:1px solid var(--border);background:var(--bg-surface);color:var(--text-primary);font-size:13px;font-family:var(--font-body);outline:none;transition:border-color .2s}
+.sidebar-search input:focus{border-color:var(--cyan)}
+.sidebar-search .search-icon{position:absolute;left:28px;top:12px;color:var(--text-muted);pointer-events:none}
+.sidebar-search .search-icon svg{width:16px;height:16px}
+.nav-group{margin-bottom:8px}
+.nav-group-title{padding:8px 20px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text-muted)}
+.nav-link{display:flex;align-items:center;gap:10px;padding:9px 20px;font-size:13.5px;color:var(--text-secondary);text-decoration:none;transition:all .15s;border-left:2px solid transparent;cursor:pointer}
+.nav-link:hover{color:var(--text-primary);background:rgba(255,255,255,.03)}
+.nav-link.active{color:var(--cyan);border-left-color:var(--cyan);background:rgba(0,212,255,.05)}
+.nav-link .nav-emoji{font-size:15px;flex-shrink:0;width:22px;text-align:center}
+
+/* ── Main ── */
+.main{margin-left:var(--sidebar-w);margin-top:var(--header-h);min-height:calc(100vh - var(--header-h))}
+.content{max-width:860px;margin:0 auto;padding:48px 40px 120px}
+
+/* ── Sections ── */
+.section{margin-bottom:72px;animation:fadeUp .5s var(--ease) both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.section-label{font-family:var(--font-mono);font-size:12px;font-weight:500;color:var(--cyan);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+.section-title{font-family:var(--font-display);font-size:clamp(28px,4vw,38px);font-weight:800;line-height:1.2;margin-bottom:16px;color:var(--text-primary)}
+.section-subtitle{font-size:17px;color:var(--text-secondary);line-height:1.7;margin-bottom:32px;max-width:640px}
+.section p{margin-bottom:16px;color:var(--text-secondary);font-size:15px;line-height:1.8}
+.section p strong{color:var(--text-primary);font-weight:600}
+
+/* ── Hero ── */
+.hero{padding:80px 40px 64px;text-align:center;position:relative;overflow:hidden;max-width:860px;margin:0 auto}
+.hero::before{content:'';position:absolute;top:-120px;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(0,212,255,.06) 0%,transparent 70%);pointer-events:none}
+.hero .section-label{font-size:13px;letter-spacing:.15em}
+.hero .section-title{font-size:clamp(34px,5vw,52px);margin-bottom:20px;background:linear-gradient(135deg,var(--text-primary) 40%,var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero .section-subtitle{margin:0 auto 36px;max-width:560px;font-size:18px}
+.hero-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:20px;background:var(--bg-card);border:1px solid var(--border);font-size:12px;color:var(--text-muted);margin-top:28px}
+.hero-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* ── Cards ── */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;margin-bottom:32px}
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:24px;transition:all .25s var(--ease)}
+.card:hover{border-color:var(--border-accent);transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,0,0,.3)}
+.card-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:14px}
+.card h3{font-size:15px;font-weight:600;margin-bottom:6px}
+.card p{font-size:13px;color:var(--text-secondary);line-height:1.6;margin:0}
+
+/* ── Accordion ── */
+.accordion{margin-bottom:12px;border:1px solid var(--border);border-radius:10px;overflow:hidden;background:var(--bg-card)}
+.accordion-trigger{width:100%;padding:18px 20px;display:flex;align-items:center;gap:12px;background:none;border:none;color:var(--text-primary);font-family:var(--font-body);font-size:14.5px;font-weight:500;text-align:left;cursor:pointer;transition:background .15s}
+.accordion-trigger:hover{background:rgba(255,255,255,.02)}
+.accordion-trigger .acc-icon{font-size:18px;flex-shrink:0;width:28px;text-align:center}
+.accordion-trigger .acc-arrow{margin-left:auto;color:var(--text-muted);transition:transform .25s var(--ease);font-size:12px}
+.accordion-trigger[aria-expanded="true"] .acc-arrow{transform:rotate(180deg)}
+.accordion-body{max-height:0;overflow:hidden;transition:max-height .35s var(--ease)}
+.accordion-body.open{max-height:3000px}
+.accordion-content{padding:0 20px 20px;font-size:14px;color:var(--text-secondary);line-height:1.8}
+.accordion-content p{margin-bottom:12px}
+.accordion-content strong{color:var(--text-primary)}
+
+/* ── Color tags ── */
+.tag{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:6px;font-size:12px;font-weight:600;font-family:var(--font-mono);white-space:nowrap}
+.tag-green{background:var(--green-dim);color:var(--green)}
+.tag-red{background:var(--red-dim);color:var(--red)}
+.tag-gold{background:var(--gold-dim);color:var(--gold)}
+.tag-cyan{background:var(--cyan-dim);color:var(--cyan)}
+.tag-purple{background:var(--purple-dim);color:var(--purple)}
+.tag-grey{background:rgba(86,90,110,.15);color:var(--text-muted)}
+
+/* ── Signal State cards ── */
+.signal-card{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:18px 20px;margin-bottom:10px;transition:border-color .2s}
+.signal-card:hover{border-color:var(--border-accent)}
+.signal-card .signal-header{display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap}
+.signal-card .signal-name{font-weight:600;font-size:14px}
+.signal-card .signal-desc{font-size:13.5px;color:var(--text-secondary);line-height:1.7}
+.signal-card .signal-example{margin-top:10px;padding:12px 16px;border-radius:8px;background:var(--bg-surface);font-size:13px;color:var(--text-muted);line-height:1.6;border-left:3px solid var(--border-accent)}
+.signal-card .signal-example strong{color:var(--text-secondary)}
+
+/* ── Alert table ── */
+.alert-table{width:100%;border-collapse:separate;border-spacing:0;margin:20px 0 32px;font-size:13px}
+.alert-table th{padding:10px 14px;text-align:left;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);background:var(--bg-surface);border-bottom:1px solid var(--border)}
+.alert-table th:first-child{border-radius:8px 0 0 0}
+.alert-table th:last-child{border-radius:0 8px 0 0}
+.alert-table td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text-secondary);vertical-align:top}
+.alert-table tr:hover td{background:rgba(255,255,255,.015)}
+.alert-table code{font-family:var(--font-mono);font-size:12px;color:var(--cyan);background:var(--cyan-dim);padding:2px 6px;border-radius:4px}
+
+/* ── Scenario Table ── */
+.scenario-grid{display:grid;gap:10px;margin:20px 0}
+.scenario-item{display:grid;grid-template-columns:44px 1fr;gap:14px;padding:16px 18px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;transition:border-color .2s}
+.scenario-item:hover{border-color:var(--border-accent)}
+.scenario-id{font-family:var(--font-mono);font-size:20px;display:flex;align-items:flex-start;justify-content:center;padding-top:2px}
+.scenario-body h4{font-size:14px;font-weight:600;margin-bottom:4px}
+.scenario-body p{font-size:13px;color:var(--text-secondary);line-height:1.6;margin:0}
+.scenario-body .scenario-example{margin-top:8px;padding:10px 14px;border-radius:6px;background:var(--bg-surface);font-size:12.5px;color:var(--text-muted);line-height:1.5}
+
+/* ── Color Legend ── */
+.color-legend{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin:20px 0}
+.color-item{display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:8px;background:var(--bg-card);border:1px solid var(--border)}
+.color-dot{width:14px;height:14px;border-radius:4px;flex-shrink:0}
+.color-item span{font-size:13px}
+
+/* ── Info callout ── */
+.callout{padding:16px 20px;border-radius:10px;margin:20px 0;font-size:14px;line-height:1.7}
+.callout-info{background:var(--cyan-dim);border:1px solid rgba(0,212,255,.2);color:var(--cyan)}
+.callout-warn{background:var(--gold-dim);border:1px solid rgba(255,209,102,.2);color:var(--gold)}
+.callout-tip{background:var(--green-dim);border:1px solid rgba(6,214,160,.2);color:var(--green)}
+.callout strong{color:inherit}
+
+/* ── Steps ── */
+.steps{counter-reset:step;margin:20px 0}
+.step{counter-increment:step;display:flex;gap:16px;padding:16px 0;position:relative}
+.step::before{content:counter(step);width:32px;height:32px;border-radius:50%;background:var(--bg-surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:13px;font-weight:600;color:var(--cyan);flex-shrink:0}
+.step:not(:last-child)::after{content:'';position:absolute;left:15px;top:52px;bottom:0;width:1px;background:var(--border)}
+.step-content h4{font-size:14px;font-weight:600;margin-bottom:4px}
+.step-content p{font-size:13.5px;color:var(--text-secondary);margin:0}
+
+/* ── Setting Item ── */
+.setting-item{padding:14px 18px;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;margin-bottom:8px}
+.setting-item h4{font-size:13.5px;font-weight:600;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.setting-item h4 .setting-default{font-family:var(--font-mono);font-size:11px;color:var(--text-muted);font-weight:400}
+.setting-item p{font-size:13px;color:var(--text-secondary);margin:0;line-height:1.6}
+
+/* ── Footer ── */
+.site-footer{border-top:1px solid var(--border);padding:40px;text-align:center;color:var(--text-muted);font-size:13px;line-height:1.8}
+.site-footer a{color:var(--cyan);text-decoration:none}
+.site-footer a:hover{text-decoration:underline}
+.footer-links{display:flex;gap:24px;justify-content:center;margin-bottom:16px;flex-wrap:wrap}
+
+/* ── Search highlight ── */
+.search-highlight{background:var(--gold-dim);color:var(--gold);padding:1px 3px;border-radius:3px}
+
+/* ── No results ── */
+.no-results{text-align:center;padding:40px 20px;color:var(--text-muted);font-size:14px;display:none}
+
+/* ── Responsive ── */
+@media(max-width:900px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+  .sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:85}
+  .sidebar-overlay.show{display:block}
+  .main{margin-left:0}
+  .content{padding:32px 20px 100px}
+  .hamburger{display:block}
+  .hero{padding:48px 20px 40px}
+  .header-actions .btn-outline{display:none}
+}
+@media(max-width:600px){
+  .card-grid{grid-template-columns:1fr}
+  .color-legend{grid-template-columns:1fr}
+  .alert-table{font-size:12px}
+  .alert-table th,.alert-table td{padding:8px 10px}
+}
+
+/* ── Divider ── */
+.divider{height:1px;background:var(--border);margin:48px 0}
+
+/* ── Visibility for search filtering ── */
+.section.hidden{display:none}
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<header class="site-header">
+  <button class="hamburger" onclick="toggleSidebar()" aria-label="Menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
+  <div class="header-brand">
+    <div class="logo-mark">ST</div>
+    <h1>SNIF-OFF 5.1<span>Complete Guide</span></h1>
+  </div>
+  <div class="header-actions">
+    <a href="https://www.tradingview.com/u/ata_sabanci/#published-scripts" target="_blank" rel="noopener" class="btn-outline">TradingView Profile</a>
+    <a href="https://www.tradingview.com/script/EDyXsADY-Smart-Trader-SNIF-OFF-5-1-Trade-Finder-By-Ata-Sabanci/" target="_blank" rel="noopener" class="btn-tv">Get the Indicator →</a>
+  </div>
+</header>
+
+<!-- ═══ SIDEBAR ═══ -->
+<div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-search">
+    <span class="search-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+    <input type="text" id="searchInput" placeholder="Search terms, features..." oninput="filterSections(this.value)">
+  </div>
+  <div class="nav-group">
+    <div class="nav-group-title">Getting Started</div>
+    <a class="nav-link" href="#welcome"><span class="nav-emoji">🏠</span>Welcome</a>
+    <a class="nav-link" href="#quickstart"><span class="nav-emoji">🚀</span>Quick Start</a>
+    <a class="nav-link" href="#dashboard"><span class="nav-emoji">📊</span>The Dashboard</a>
+  </div>
+  <div class="nav-group">
+    <div class="nav-group-title">Core Modules</div>
+    <a class="nav-link" href="#trend"><span class="nav-emoji">📈</span>Trend Engine</a>
+    <a class="nav-link" href="#efficiency"><span class="nav-emoji">⚡</span>Candle Efficiency</a>
+    <a class="nav-link" href="#volume"><span class="nav-emoji">📦</span>Volume Intelligence</a>
+    <a class="nav-link" href="#footprint"><span class="nav-emoji">🔬</span>Volume Footprint</a>
+    <a class="nav-link" href="#grouping"><span class="nav-emoji">📐</span>Grouping & Leaders</a>
+  </div>
+  <div class="nav-group">
+    <div class="nav-group-title">Reference</div>
+    <a class="nav-link" href="#alerts"><span class="nav-emoji">🔔</span>All Alerts (54)</a>
+    <a class="nav-link" href="#settings"><span class="nav-emoji">⚙️</span>Settings Reference</a>
+    <a class="nav-link" href="#glossary"><span class="nav-emoji">📖</span>Glossary</a>
+    <a class="nav-link" href="#faq"><span class="nav-emoji">❓</span>FAQ</a>
+    <a class="nav-link" href="#about"><span class="nav-emoji">👤</span>About</a>
+  </div>
+</nav>
+
+<!-- ═══ MAIN CONTENT ═══ -->
+<main class="main">
+<div class="content">
+
+<!-- ═══ HERO ═══ -->
+<div class="hero" id="welcome">
+  <div class="section-label">Smart Trader — SNIF-OFF 5.1 · Trade Finder</div>
+  <h1 class="section-title">Complete Educational Guide</h1>
+  <p class="section-subtitle">Everything you need to understand and master the indicator — every feature, every term, every alert. Zero guesswork.</p>
+  <div class="hero-actions">
+    <a href="https://www.tradingview.com/script/EDyXsADY-Smart-Trader-SNIF-OFF-5-1-Trade-Finder-By-Ata-Sabanci/" target="_blank" rel="noopener" class="btn-tv">Get the Indicator on TradingView →</a>
+    <a href="#quickstart" class="btn-outline">Start Learning ↓</a>
+  </div>
+  <div class="hero-badge"><span class="dot"></span> By Ata Sabancı · Invite-Only Indicator</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══ CHAPTER: QUICK START ═══ -->
+<section class="section" id="quickstart" data-search="quick start setup install add chart tier plan subscription">
+  <div class="section-label">Chapter 0</div>
+  <h2 class="section-title">Quick Start</h2>
+  <p class="section-subtitle">Get the indicator running on your chart in under 2 minutes.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-content">
+        <h4>Get Access</h4>
+        <p>This is an <strong>invite-only</strong> indicator. Contact Ata Sabancı through <a href="https://www.tradingview.com/u/ata_sabanci/" target="_blank" rel="noopener" style="color:var(--cyan)">his TradingView profile</a> to request access.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-content">
+        <h4>Add to Your Chart</h4>
+        <p>Once you have access, search for <strong>"Smart Trader, SNIF-OFF 5.1, Trade Finder"</strong> in TradingView's indicator search, or open the <a href="https://www.tradingview.com/script/EDyXsADY-Smart-Trader-SNIF-OFF-5-1-Trade-Finder-By-Ata-Sabanci/" target="_blank" rel="noopener" style="color:var(--cyan)">indicator page</a> and click "Add to Chart".</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-content">
+        <h4>Select Your TradingView Plan</h4>
+        <p>In the indicator settings, choose the <strong>Subscription Plan</strong> that matches your TradingView account. This unlocks the features available for your plan level.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-content">
+        <h4>Choose Your Language</h4>
+        <p>The dashboard supports <strong>English</strong>, <strong>Türkçe</strong>, and <strong>العربية</strong>. Select your preference in the Dashboard settings group.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-content">
+        <h4>Read the Dashboard</h4>
+        <p>Read from <strong>top to bottom</strong>: Trend direction first, then move quality (efficiency), then volume analysis. Each row builds on the one above it.</p>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="font-size:17px;font-weight:700;margin:32px 0 16px">Subscription Tiers</h3>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon" style="background:var(--green-dim)">🆓</div>
+      <h3>Basic (Free)</h3>
+      <p>Trend Engine, Candle Efficiency, Geometry-based Volume, Dashboard, Grouping Boxes, Leader Candles, Trend Lines, all Alerts.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:var(--gold-dim)">⭐</div>
+      <h3>Essential & Plus</h3>
+      <p>Everything in Basic <strong>plus</strong> Intrabar Volume method — higher precision volume decomposition using lower-timeframe data.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:var(--cyan-dim)">💎</div>
+      <h3>Premium & Ultimate</h3>
+      <p>Everything in Essential <strong>plus</strong> Native Footprint — real tick-level volume-at-price data for exact buy/sell at each price row.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ CHAPTER: DASHBOARD ═══ -->
+<section class="section" id="dashboard" data-search="dashboard panel color green red gold cyan grey position font mobile desktop language">
+  <div class="section-label">Chapter 1</div>
+  <h2 class="section-title">The Dashboard</h2>
+  <p class="section-subtitle">Your control panel — every piece of market intelligence in one place.</p>
+
+  <p>The dashboard is a multi-row panel that appears on your chart. It combines all the indicator's analysis into a single view you can read top-to-bottom. Think of it as your market situation report — updated on every closed candle.</p>
+
+  <h3 style="font-size:17px;font-weight:700;margin:28px 0 14px">Color Coding System</h3>
+  <p>Colors in the dashboard are <strong>not random</strong>. Every color has a consistent meaning across the entire indicator:</p>
+
+  <div class="color-legend">
+    <div class="color-item"><div class="color-dot" style="background:#06d6a0"></div><span><strong style="color:var(--green)">Green</strong> — Bullish / Positive / Supportive</span></div>
+    <div class="color-item"><div class="color-dot" style="background:#ef476f"></div><span><strong style="color:var(--red)">Red</strong> — Bearish / Warning / Opposing</span></div>
+    <div class="color-item"><div class="color-dot" style="background:#ffd166"></div><span><strong style="color:var(--gold)">Gold</strong> — Caution / Mixed / Transitioning</span></div>
+    <div class="color-item"><div class="color-dot" style="background:#00d4ff"></div><span><strong style="color:var(--cyan)">Cyan</strong> — Extreme / Shock / Exceptional</span></div>
+    <div class="color-item"><div class="color-dot" style="background:#a78bfa"></div><span><strong style="color:var(--purple)">Purple</strong> — Reversal / Cascade confirmed</span></div>
+    <div class="color-item"><div class="color-dot" style="background:#555555"></div><span><strong style="color:var(--text-muted)">Grey</strong> — No data / Insufficient / Neutral</span></div>
+  </div>
+
+  <h3 style="font-size:17px;font-weight:700;margin:28px 0 14px">Desktop vs Mobile</h3>
+  <p>The <strong>Desktop Dashboard</strong> shows the full multi-row panel with all active modules. The <strong>Mobile Dashboard</strong> is a slim 5-row version showing only the most critical data — trend direction, move quality, and volume pressure. Toggle mobile mode in settings when trading on a phone.</p>
+
+  <div class="callout callout-tip"><strong>Tip:</strong> Read the dashboard from top to bottom. Trend direction tells you WHERE the market is going. Efficiency tells you HOW WELL it's going there. Volume tells you WHO is pushing it.</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ CHAPTER: TREND ENGINE ═══ -->
+<section class="section" id="trend" data-search="trend engine direction alignment reversal cascade divergence macro bias uptrend downtrend conviction signal bullish bearish narrative">
+  <div class="section-label">Chapter 2</div>
+  <h2 class="section-title">Trend Engine</h2>
+  <p class="section-subtitle">Multi-scale direction analysis — know the trend before the crowd does.</p>
+
+  <p>The Trend Engine analyzes price direction across <strong>6 different time horizons simultaneously</strong> — from 3 bars (fastest) to 49 bars (slowest). It then combines them into a single, actionable signal. Think of it as 6 different analysts watching the same chart at different zoom levels, and the engine reports whether they agree or disagree.</p>
+
+  <h3 style="font-size:17px;font-weight:700;margin:28px 0 14px">Alignment Score</h3>
+  <p>Each of the 6 scales votes: <strong>+1</strong> (bullish), <strong>−1</strong> (bearish), or <strong>0</strong> (flat). Add them up and you get the Alignment Score, which ranges from <strong>−6</strong> (every scale bearish) to <strong>+6</strong> (every scale bullish).</p>
+  <div class="callout callout-info"><strong>Example:</strong> If 5 out of 6 scales say "up" and 1 says "down", the alignment is +4. That's a solid uptrend with near-total agreement.</div>
+
+  <h3 style="font-size:17px;font-weight:700;margin:28px 0 14px">The 11 Trend States</h3>
+  <p>The engine resolves into one of 11 states, ordered by priority (highest-priority signals override lower ones):</p>
+
+  <div class="signal-card">
+    <div class="signal-header"><span class="tag tag-purple">⚡ Bullish Reversal Confirmed ▲</span></div>
+    <div class="signal-desc">The short-term AND mid-term scales have both turned bullish while the long-term is still bearish. Two independent layers confirm the turn — this is the strongest reversal signal.</div>
+    <div class="signal-example"><strong>Example:</strong> Price has been falling for days. Now the 3, 7, 13, and 19-bar scales all point up — only the 29 and 49-bar still point down. The reversal is confirmed from the inside out.</div>
+  </div>
+  <div class="signal-card">
+    <div class="signal-header"><span class="tag tag-purple">⚡ Bearish Reversal Confirmed ▼</span></div>
+    <div class="signal-desc">Mirror of above — short and mid-term turned bearish while the broad structure is still bullish. Two layers confirm the turn downward.</div>
+    <div class="signal-example"><strong>Example:</strong> A strong uptrend is active, but now 4 of 6 scales flipped bearish. The trend is cracking from the inside.</div>
+  </div>
+  <div class="signal-card">
+    <div class="signal-header"><span class="tag tag-gold">▲ Bullish Reversal Forming</span></div>
+    <div class="signal-desc">Only the fastest scales (3 and 7-bar) have turned bullish while the slowest (29 and 49-bar) still point down. This is an <strong>early warning</strong> — the reversal is building but not yet confirmed by the mid-term.</div>
+    <div class="signal-example"><strong>Example:</strong> After a downtrend, the very short-term momentum turns up, but the bigger picture hasn't caught up yet. Watch for the mid-term to follow.</div>
+  </div>
+  <div class="signal-card">
+    <div class="signal-header"><span class="tag tag-gold">▼ Bearish Reversal Forming</span></div>
+    <div class="signal-desc">Fastest scales turned bearish while the slowest still point up. Early bearish warning.</div>
+  </div>
+  <div class="signal-card">
+    <div class="signal-header"><span class="tag tag-green">▲▲ Strong Uptrend</span></div>
+    <div class="signal-desc">5 or 6 out of 6 scales agree on bullish direction (alignment ≥ +5). Near-total consensus — the trend is established and clear.</div>
+    <div class="signal-example"><strong>Example:</strong> Every time horizon from 3 bars to 49 bars says "up". This is as clear as it gets.</div>
+  </div>
+  <div class="signal-card">
+    <div class="signal-header"><span class="tag tag-red">▼▼ Strong Downtrend</span></div>
+    <div class="signal-desc">5 or 6 out of 6 scales agree on bearish direction (alignment ≤ −5). Near-total bearish consensus.</div>
+  </div>
+  <div class="signal-card">
+    <div class="signal-header"><span class="tag tag-green">▲ Hidden Bullish Bias</span></div>
+    <div class="signal-desc">Short-term is messy and unclear, but the two largest scales (29 and 49-bar) both point up. There's a structural bullish lean that the short-term noise is hiding.</div>
+    <div class="signal-example"><strong>Example:</strong> The market looks choppy on small timeframes, but zoom out — the big picture is quietly bullish. Short-term noise masks the real direction.</div>
+  </div>
+  <div class="signal-card">
+    <div class="signal-header"><span class="tag tag-red">▼ Hidden Bearish Bias</span></div>
+    <div class="signal-desc">Short-term is noisy, but the structural scales both point down. The underlying direction is bearish despite surface confusion.</div>
+  </div>
+  <div class="signal-card">
+    <div class="signal-header"><span class="tag tag-green">▲ Uptrend Active</span></div>
+    <div class="signal-desc">3 or 4 scales agree on bullish direction (alignment +3 to +4). A majority says "up" — the trend is active but not at full consensus yet.</div>
+  </div>
+  <div class="signal-card">
+    <div class="signal-header"><span class="tag tag-red">▼ Downtrend Active</span></div>
+    <div class="signal-desc">3 or 4 scales agree on bearish direction (alignment −3 to −4). Majority bearish.</div>
+  </div>
+  <div class="signal-card">
+    <div class="signal-header"><span class="tag tag-grey">◆ No Clear Trend</span></div>
+    <div class="signal-desc">Fewer than 3 scales agree on any direction. The market is confused — different time horizons contradict each other. No reliable directional edge exists right now.</div>
+    <div class="signal-example"><strong>Example:</strong> The 3-bar says up, 7-bar says down, 13-bar says up, 29-bar says down. Total disagreement — stay cautious or wait.</div>
+  </div>
+
+  <h3 style="font-size:17px;font-weight:700;margin:28px 0 14px">Conviction</h3>
+  <p>Direction alone isn't enough — you need to know <strong>how strong</strong> the moves behind it are. Conviction measures the power of the moves across all scales, not just their direction.</p>
+  <div style="display:grid;gap:8px;margin:16px 0">
+    <div class="signal-card"><div class="signal-header"><span class="tag tag-green">HIGH</span></div><div class="signal-desc">Powerful moves across multiple time horizons. The direction has strong muscle behind it. Take the signal seriously.</div></div>
+    <div class="signal-card"><div class="signal-header"><span class="tag tag-gold">MODERATE</span></div><div class="signal-desc">Normal move strength. The direction is there but the energy is average.</div></div>
+    <div class="signal-card"><div class="signal-header"><span class="tag tag-grey">LOW</span></div><div class="signal-desc">Weak momentum despite a possible directional signal. The moves are timid — wait for confirmation before committing.</div></div>
+  </div>
+
+  <h3 style="font-size:17px;font-weight:700;margin:28px 0 14px">Trend Narrative</h3>
+  <p>Below the signal, the dashboard shows a 3-line human-readable summary:</p>
+  <div style="display:grid;gap:6px;margin:12px 0">
+    <p><strong>Line 1 — What:</strong> The current trend state in one sentence (e.g., "Strong uptrend established.")</p>
+    <p><strong>Line 2 — Why:</strong> The structural detail behind it (e.g., "Near-total agreement across all time horizons.")</p>
+    <p><strong>Line 3 — How strong:</strong> Conviction context (e.g., "Moves are powerful and decisive — high confidence.")</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ CHAPTER: EFFICIENCY ═══ -->
+<section class="section" id="efficiency" data-search="efficiency candle move quality choppy normal efficient shock regime rank momentum accelerating sharpening steady fading coupling surge confirmed stalling counter pressure noise">
+  <div class="section-label">Chapter 3</div>
+  <h2 class="section-title">Candle Efficiency</h2>
+  <p class="section-subtitle">Move Quality — is the market moving with purpose or spinning its wheels?</p>
+
+  <p>Efficiency measures how much of a candle's total energy was converted into a <strong>clear directional move</strong>. A candle can be very active (large range) but accomplish nothing directional (close near open, huge wicks). Efficiency captures this distinction.</p>
+
+  <div class="callout callout-info"><strong>Simple analogy:</strong> Imagine a runner. Running 100 meters in a straight line = HIGH efficiency. Running 100 meters but zigzagging and ending up only 10 meters from the start = LOW efficiency. Same energy spent, very different result.</div>
+
+  <h3 style="font-size:17px;font-weight:700;margin:28px 0 14px">The Efficiency Percentage</h3>
+  <p>Shown as something like <strong>"▲ 73.2%"</strong>. The arrow (▲/▼) shows the direction of the composite move, and the percentage shows how much of the candle group's total motion became directional displacement.</p>
+
+  <h3 style="font-size:17px;font-weight:700;margin:28px 0 14px">Regime Labels — What Quality Looks Like</h3>
+
+  <div class="signal-card">
+    <div class="signal-header"><span class="tag tag-cyan">Shock!</span> <span style="font-size:13px;color:var(--text-muted)">≥ 100%</span></div>
+    <div class="signal-desc">An extraordinary event. The candle moved <strong>more</strong> directionally than its total range suggested was possible. Extremely rare — think flash crash, surprise news, massive breakout.</div>
+    <div class="signal-example"><strong>Example:</strong> A central bank announces an emergency rate cut. The candle explodes in one direction with almost no wick. This is a shock event.</div>
+  </div>
+  <div class="signal-card">
+    <div class="signal-header"><span class="tag tag-green">Efficient</span> <span style="font-size:13px;color:var(--text-muted)">50% — 100%</span></div>
+    <div class="signal-desc">Clean, purposeful move. More than half the candle's energy went into directional displacement. This is what a <strong>healthy trending market</strong> looks like.</div>
+    <div class="signal-example"><strong>Example:</strong> A candle with a solid body and small wicks. It opened, moved decisively, and closed near its extreme. Clean trend behavior.</div>
+  </div>
+  <div class="signal-card">
+    <div class="signal-header"><span class="tag tag-gold">Normal</span> <span style="font-size:13px;color:var(--text-muted)">20% — 50%</span></div>
+    <div class="signal-desc">Average market behavior. Some direction, some noise. Not remarkable in either direction. This is the default state most of the time.</div>
+    <div class="signal-example"><strong>Example:</strong> A regular candle on a regular day. Some body, some wicks. The market moved a bit but nothing dramatic.</div>
+  </div>
+  <div class="signal-card">
+    <div class="signal-header"><span class="tag tag-red">Choppy</span> <span style="font-size:13px;color:var(--text-muted)">&lt; 20%</span></div>
+    <div class="signal-desc"><strong>No useful directional movement.</strong> The candle had range (it moved up and down) but accomplished almost nothing — the close is very near the open. Like someone running in place.</div>
+    <div class="signal-example"><strong>Example:</strong> A doji candle with long wicks on both sides. The market was active but buyers and sellers cancelled each other out. No direction. Don't expect continuation from this.</div>
+  </div>
+
+  <h3 style="font-size:17px;font-weight:700;margin:28px 0 14px">Adaptive Rank (Percentile)</h3>
+  <p>The raw percentage alone doesn't tell you if a move is unusual. An 80% efficiency might be normal for one instrument but extreme for another. The <strong>Adaptive Rank</strong> solves this by comparing the current efficiency against the last 100 bars automatically:</p>
+  <div style="display:grid;gap:8px;margin:12px 0">
+    <div class="signal-card"><div class="signal-header"><span class="tag tag-cyan">Extreme</span> <span style="font-size:13px;color:var(--text-muted)">Top 5% of recent history</span></div><div class="signal-desc">This move is stronger than 95% of recent moves. Something unusual is happening.</div></div>
+    <div class="signal-card"><div class="signal-header"><span class="tag tag-green">Strong</span> <span style="font-size:13px;color:var(--text-muted)">Top 25%</span></div><div class="signal-desc">Above average — a meaningful move by recent standards.</div></div>
+    <div class="signal-card"><div class="signal-header"><span class="tag tag-gold">Normal</span> <span style="font-size:13px;color:var(--text-muted)">Middle 50%</span></div><div class="signal-desc">Average for this instrument. Nothing remarkable.</div></div>
+    <div class="signal-card"><div class="signal-header"><span class="tag tag-grey">Weak</span> <span style="font-size:13px;color:var(--text-muted)">Bottom 25%</span></div><div class="signal-desc">Weaker than most recent moves. The market is sluggish.</div></div>
+  </div>
+
+  <h3 style="font-size:17px;font-weight:700;margin:28px 0 14px">Efficiency Momentum — Where Quality is Heading</h3>
+  <p>Momentum tells you the <strong>trajectory</strong> of move quality — is it getting better or worse?</p>
+  <div style="display:grid;gap:8px;margin:12px 0">
+    <div class="signal-card"><div class="signal-header"><span class="tag tag-cyan">Accelerating</span></div><div class="signal-desc">Quality is surging. Recent moves are much stronger than the baseline. The trend is <strong>gaining power</strong> — strong continuation expected.</div></div>
+    <div class="signal-card"><div class="signal-header"><span class="tag tag-green">Sharpening</span></div><div class="signal-desc">Quality is gradually improving. A healthy sign — the market is becoming more directional over time.</div></div>
+    <div class="signal-card"><div class="signal-header"><span class="tag tag-gold">Steady</span></div><div class="signal-desc">No significant change in quality. Stable — no stress, but no new energy either.</div></div>
+    <div class="signal-card"><div class="signal-header"><span class="tag tag-red">Fading</span></div><div class="signal-desc">Quality is declining. Moves are getting weaker. <strong>Watch for exhaustion</strong> — the trend may be running out of fuel.</div></div>
+  </div>
+
+  <h3 style="font-size:17px;font-weight:700;margin:28px 0 14px">Trend Coupling — Efficiency Meets Direction</h3>
+  <p>The real power comes from combining efficiency with the active trend. A highly efficient bearish candle during a bullish trend is a <strong>warning</strong>, not a green light. The indicator produces 19 coupled states:</p>
+
+  <h4 style="font-size:14px;font-weight:600;margin:20px 0 10px;color:var(--green)">When efficiency SUPPORTS the trend (Aligned):</h4>
+  <div style="display:grid;gap:6px;margin-bottom:16px">
+    <div class="signal-card"><div class="signal-header"><span class="tag tag-cyan">⚡ BULL/BEAR SURGE</span></div><div class="signal-desc">Extreme efficiency backing the trend. Explosive, high-conviction move.</div></div>
+    <div class="signal-card"><div class="signal-header"><span class="tag tag-green">BULL/BEAR CONFIRMED</span></div><div class="signal-desc">Strong efficiency supporting the trend. Solid, reliable continuation.</div></div>
+    <div class="signal-card"><div class="signal-header"><span class="tag tag-gold">Bull/Bear Active</span></div><div class="signal-desc">Normal efficiency in the trend direction. Standard trend behavior.</div></div>
+    <div class="signal-card"><div class="signal-header"><span class="tag tag-grey">Bull/Bear Stalling</span></div><div class="signal-desc">Weak efficiency despite matching direction. The trend is losing steam.</div></div>
+  </div>
+
+  <h4 style="font-size:14px;font-weight:600;margin:20px 0 10px;color:var(--red)">When efficiency FIGHTS the trend (Opposed):</h4>
+  <div style="display:grid;gap:6px;margin-bottom:16px">
+    <div class="signal-card"><div class="signal-header"><span class="tag tag-red">⚠ STRONG COUNTER</span></div><div class="signal-desc">Extreme efficiency against the trend. Serious danger — this move threatens the trend.</div></div>
+    <div class="signal-card"><div class="signal-header"><span class="tag tag-red">Pressure</span></div><div class="signal-desc">Strong push against the trend. A warning shot.</div></div>
+    <div class="signal-card"><div class="signal-header"><span class="tag tag-gold">Mild Resistance/Support</span></div><div class="signal-desc">Moderate counter-move. Probably a normal pullback within the trend.</div></div>
+    <div class="signal-card"><div class="signal-header"><span class="tag tag-grey">Noise</span></div><div class="signal-desc">Negligible move against the trend. Ignore it.</div></div>
+  </div>
+
+  <h4 style="font-size:14px;font-weight:600;margin:20px 0 10px;color:var(--text-muted)">When there is NO active trend (Neutral):</h4>
+  <div style="display:grid;gap:6px">
+    <div class="signal-card"><div class="signal-header"><span class="tag tag-cyan">Extreme Move</span> <span class="tag tag-green">Strong Move</span> <span class="tag tag-gold">Normal</span> <span class="tag tag-grey">Indecisive</span></div><div class="signal-desc">Without a trend to couple against, the state simply reflects the raw quality level.</div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ CHAPTER: VOLUME ═══ -->
+<section class="section" id="volume" data-search="volume buy sell delta total geometry intrabar decomposition scenario confirmation counter breakout dead market absorption distribution capitulation exhaustion divergence accumulation">
+  <div class="section-label">Chapter 4</div>
+  <h2 class="section-title">Volume Intelligence</h2>
+  <p class="section-subtitle">Who's buying, who's selling, and how much pressure is behind it.</p>
+
+  <p>Volume tells you the <strong>intensity</strong> behind price moves. A price increase on heavy volume is more meaningful than one on thin volume. This module decomposes total volume into buying and selling components, then ranks and classifies the result.</p>
+
+  <h3 style="font-size:17px;font-weight:700;margin:28px 0 14px">Volume Decomposition Methods</h3>
+  <div class="card-grid" style="margin-bottom:24px">
+    <div class="card">
+      <div class="card-icon" style="background:var(--green-dim)">📐</div>
+      <h3>Geometry Method</h3>
+      <p>Available on <strong>all plans</strong>. Uses the candle's shape to estimate the buy/sell split. If the close is near the high, more volume is attributed to buying. If near the low, more to selling. Simple and effective.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:var(--cyan-dim)">🔍</div>
+      <h3>Intrabar Method</h3>
+      <p>Requires <strong>Essential+</strong> plan. Uses real lower-timeframe data to classify volume more precisely. Set your preferred lower timeframe (1 minute recommended) in settings.</p>
+    </div>
+  </div>
+
+  <h3 style="font-size:17px;font-weight:700;margin:28px 0 14px">Key Volume Metrics</h3>
+  <div style="display:grid;gap:8px;margin-bottom:24px">
+    <div class="setting-item"><h4>Total Volume</h4><p>The full volume of the candle — all buying and selling combined.</p></div>
+    <div class="setting-item"><h4>Buy Volume</h4><p>The estimated portion of volume attributed to buying pressure.</p></div>
+    <div class="setting-item"><h4>Sell Volume</h4><p>The estimated portion of volume attributed to selling pressure.</p></div>
+    <div class="setting-item"><h4>Delta <span class="tag tag-green" style="font-size:10px">Buy − Sell</span></h4><p>The difference between buy and sell volume. <strong>Positive delta</strong> = buyers dominated that candle. <strong>Negative delta</strong> = sellers dominated. This is the single most important volume number — it tells you who won.</p></div>
+  </div>
+
+  <h3 style="font-size:17px;font-weight:700;margin:28px 0 14px">Volume Zones</h3>
+  <p>How the current volume ranks against recent history, automatically adjusted per instrument:</p>
+  <div style="display:grid;gap:8px;margin:12px 0 24px">
+    <div class="signal-card"><div class="signal-header"><span class="tag tag-cyan">Explosive Volume</span></div><div class="signal-desc">Top 5% of recent history. Something significant is happening — a breakout, news event, or major shift. Pay attention.</div></div>
+    <div class="signal-card"><div class="signal-header"><span class="tag tag-green">Elevated Volume</span></div><div class="signal-desc">Above average. Real market interest. Moves backed by this volume tend to be more reliable.</div></div>
+    <div class="signal-card"><div class="signal-header"><span class="tag tag-gold">Moderate Volume</span></div><div class="signal-desc">Normal market activity. Nothing unusual.</div></div>
+    <div class="signal-card"><div class="signal-header"><span class="tag tag-grey">Very Low Volume</span></div><div class="signal-desc">The market is quiet. Moves on low volume are less reliable — they can reverse easily.</div></div>
+  </div>
+
+  <h3 style="font-size:17px;font-weight:700;margin:28px 0 14px">All 16 Volume Scenarios</h3>
+  <p>The indicator classifies the current volume situation into one of 16 scenarios. Each tells a different story about what's happening behind the price:</p>
+
+  <div class="scenario-grid">
+    <div class="scenario-item"><div class="scenario-id">⚡</div><div class="scenario-body"><h4>S1 — Full Buy/Sell Confirmation</h4><p>Extreme volume fully confirms the active trend. The highest-conviction volume signal.</p><div class="scenario-example">Oil is trending up. Buying volume just hit the highest level in weeks — full confirmation that real money is behind this move.</div></div></div>
+
+    <div class="scenario-item"><div class="scenario-id">✓</div><div class="scenario-body"><h4>S2 — Healthy Buy/Sell Support</h4><p>Solid volume backs the trend with above-average participation. No stress signals.</p><div class="scenario-example">A steady uptrend with consistent buying volume above average. This is what a healthy trend looks like.</div></div></div>
+
+    <div class="scenario-item"><div class="scenario-id">◆</div><div class="scenario-body"><h4>S3 — Weak Buy/Sell Support</h4><p>Direction matches the trend but volume is thin. Not enough conviction to inspire confidence.</p><div class="scenario-example">Price is rising, but volume is below average. The move is correct but poorly supported — it may stall without fresh participation.</div></div></div>
+
+    <div class="scenario-item"><div class="scenario-id">⚠</div><div class="scenario-body"><h4>S4 — Major Counter</h4><p>Extreme volume pushing <strong>against</strong> the active trend. This is not noise — something serious is happening.</p><div class="scenario-example">The market has been trending up, but suddenly a candle with extreme selling volume appears. The opposition is powerful — the trend is under threat.</div></div></div>
+
+    <div class="scenario-item"><div class="scenario-id">⚠</div><div class="scenario-body"><h4>S5 — Pressure Growing</h4><p>Significant volume building against the trend. Not extreme yet, but a clear warning.</p><div class="scenario-example">Each recent candle shows increasing sell volume during an uptrend. The bears are gathering strength.</div></div></div>
+
+    <div class="scenario-item"><div class="scenario-id">◇</div><div class="scenario-body"><h4>S6 — Normal Correction</h4><p>Minor counter-move with weak volume. The trend should absorb this easily.</p><div class="scenario-example">A small red candle in an uptrend with below-average selling. Just a normal pullback — the trend remains healthy.</div></div></div>
+
+    <div class="scenario-item"><div class="scenario-id">💥</div><div class="scenario-body"><h4>S7 — Breakout Candidate</h4><p>Extreme one-sided volume without an established trend. Something is about to move.</p><div class="scenario-example">The market has been flat, but suddenly massive buying volume appears. No trend existed before — this volume surge could be the start of one.</div></div></div>
+
+    <div class="scenario-item"><div class="scenario-id">●</div><div class="scenario-body"><h4>S8 — Dead Market</h4><p>Minimal volume from both sides. Nobody is participating. Wait for activity to return.</p><div class="scenario-example">Holiday trading or a low-liquidity session. Volume is near zero. Any price movement here is unreliable.</div></div></div>
+
+    <div class="scenario-item"><div class="scenario-id">🧲</div><div class="scenario-body"><h4>S9 — Fair Value Magnet</h4><p>Price has moved away from where most volume is concentrated across multiple scales. That volume center acts like a magnet — price tends to return to it.</p><div class="scenario-example">The volume center across multiple grouping periods is at $85.50, but price is at $87.00. If enough scales agree, that $85.50 level may pull price back.</div></div></div>
+
+    <div class="scenario-item"><div class="scenario-id">🛡</div><div class="scenario-body"><h4>S10 — Demand Absorption</h4><p>Heavy buying detected near the price lows. Buyers are defending a floor — potential accumulation zone.</p><div class="scenario-example">The heaviest buying volume is concentrated at the bottom of the price range. Buyers are stepping in every time price drops to this level.</div></div></div>
+
+    <div class="scenario-item"><div class="scenario-id">📤</div><div class="scenario-body"><h4>S11 — Supply Distribution</h4><p>Heavy selling detected near the price highs. Sellers are capping the ceiling — potential distribution zone.</p><div class="scenario-example">Every time price pushes to the top of the range, heavy selling appears. Someone is distributing (selling) at these levels.</div></div></div>
+
+    <div class="scenario-item"><div class="scenario-id">💢</div><div class="scenario-body"><h4>S12 — Selling Capitulation</h4><p>Panic selling at extreme volume near the lows. This often marks the <strong>final flush</strong> before a bottom.</p><div class="scenario-example">After a prolonged decline, volume explodes to the downside with panic-level selling. This is typically where the last fearful sellers give up — a potential reversal zone.</div></div></div>
+
+    <div class="scenario-item"><div class="scenario-id">💢</div><div class="scenario-body"><h4>S13 — Buying Exhaustion</h4><p>Exhaustion buying at extreme volume near the highs. This often marks the <strong>final push</strong> before a top.</p><div class="scenario-example">After a long rally, buying volume spikes to extreme levels at the highs. The last euphoric buyers are rushing in — a potential blow-off top.</div></div></div>
+
+    <div class="scenario-item"><div class="scenario-id">⚠</div><div class="scenario-body"><h4>S14 — Volume Divergence</h4><p>The trend continues but volume participation is declining. The foundation is weakening even though the surface looks fine.</p><div class="scenario-example">Price keeps making new highs, but each new high comes with less volume. Fewer participants are driving the move — a warning that the trend is thinning out.</div></div></div>
+
+    <div class="scenario-item"><div class="scenario-id">🔍</div><div class="scenario-body"><h4>S15 — Quiet Accumulation</h4><p>Small but persistent buying near the lows with minimal attention. Someone is quietly building a position.</p><div class="scenario-example">Volume is low and the market looks boring, but there's steady buying near the bottom of the range. Smart money may be positioning before a move.</div></div></div>
+
+    <div class="scenario-item"><div class="scenario-id">🔍</div><div class="scenario-body"><h4>S16 — Quiet Distribution</h4><p>Small but persistent selling near the highs with minimal attention. Someone is quietly exiting.</p><div class="scenario-example">The market is calm at the highs, but there's a steady trickle of selling. Insiders may be quietly offloading positions.</div></div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ CHAPTER: FOOTPRINT ═══ -->
+<section class="section" id="footprint" data-search="footprint poc point of control volume at price max buy sell min value area native geometry grouping scale">
+  <div class="section-label">Chapter 5</div>
+  <h2 class="section-title">Volume Footprint</h2>
+  <p class="section-subtitle">Not just how much volume — but WHERE it happened at each price level.</p>
+
+  <p>Regular volume tells you the total number of shares or contracts traded in a candle. The <strong>Volume Footprint</strong> goes deeper: it shows you the volume <strong>at each price level</strong> within a group of candles. This reveals where the real battles between buyers and sellers happened.</p>
+
+  <h3 style="font-size:17px;font-weight:700;margin:28px 0 14px">Key Concepts</h3>
+
+  <div class="accordion">
+    <button class="accordion-trigger" onclick="toggleAcc(this)" aria-expanded="false">
+      <span class="acc-icon">🎯</span> Point of Control (POC) <span class="acc-arrow">▼</span>
+    </button>
+    <div class="accordion-body"><div class="accordion-content">
+      <p>The <strong>Point of Control</strong> is the single price level where the <strong>most total volume</strong> (buying + selling combined) traded within a grouping period. Think of it as the "fair value" — the price that the most participants agreed on.</p>
+      <p><strong>Example:</strong> In a 13-candle group, imagine all the volume distributed across every price level. If $142.50 had the most volume, that's the POC. It tells you: "This is where the market found the most agreement."</p>
+      <p><strong>Why it matters:</strong> POC levels act as <strong>magnets</strong>. When price moves away from a POC, it often returns to it. The more grouping scales that agree on a similar POC price, the stronger that magnet effect.</p>
+    </div></div>
+  </div>
+
+  <div class="accordion">
+    <button class="accordion-trigger" onclick="toggleAcc(this)" aria-expanded="false">
+      <span class="acc-icon">📊</span> Max Buy / Max Sell Levels <span class="acc-arrow">▼</span>
+    </button>
+    <div class="accordion-body"><div class="accordion-content">
+      <p><strong>Max Buy Price:</strong> The price level where the heaviest buying volume was concentrated. This is where buyers were most aggressive.</p>
+      <p><strong>Max Sell Price:</strong> The price level where the heaviest selling volume was concentrated. This is where sellers were most aggressive.</p>
+      <p><strong>Why it matters:</strong> If Max Buy is near the lows of the range, buyers are defending a floor (potential support). If Max Sell is near the highs, sellers are capping price (potential resistance).</p>
+    </div></div>
+  </div>
+
+  <div class="accordion">
+    <button class="accordion-trigger" onclick="toggleAcc(this)" aria-expanded="false">
+      <span class="acc-icon">📉</span> Min Buy / Min Sell Levels <span class="acc-arrow">▼</span>
+    </button>
+    <div class="accordion-body"><div class="accordion-content">
+      <p>The price levels with the <strong>least</strong> buying or selling volume. These are weak zones — price passed through them quickly without much participation.</p>
+      <p><strong>Why it matters:</strong> Weak volume zones offer less resistance. If price revisits these levels, it may pass through easily — they're not defended.</p>
+    </div></div>
+  </div>
+
+  <div class="accordion">
+    <button class="accordion-trigger" onclick="toggleAcc(this)" aria-expanded="false">
+      <span class="acc-icon">🔗</span> POC Consensus (X of 6 Scales Agree) <span class="acc-arrow">▼</span>
+    </button>
+    <div class="accordion-body"><div class="accordion-content">
+      <p>The indicator computes a POC for each of the 6 grouping scales (3, 7, 13, 19, 29, 49 bars). When multiple scales have their POC near the same price, that creates <strong>consensus</strong>.</p>
+      <p><strong>"4 of 6 Scales Agree"</strong> means 4 different time horizons all found their highest-volume price near the same level. This is a very strong signal that this price is important.</p>
+      <p><strong>Example:</strong> The 7-bar POC is at $85.40, the 13-bar at $85.55, the 19-bar at $85.30, and the 29-bar at $85.45. Four scales cluster around $85.40 — that's a powerful volume center.</p>
+    </div></div>
+  </div>
+
+  <h3 style="font-size:17px;font-weight:700;margin:28px 0 14px">Footprint Methods</h3>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon" style="background:var(--green-dim)">📐</div>
+      <h3>Geometry (All Plans)</h3>
+      <p>Estimates volume distribution across price levels using the candle's shape. Works everywhere, no special plan needed.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:var(--cyan-dim)">🔬</div>
+      <h3>Native (Premium+)</h3>
+      <p>Uses real tick-level data from TradingView for exact buy/sell volume at each price row. Maximum precision. Requires Premium or Ultimate plan.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ CHAPTER: GROUPING ═══ -->
+<section class="section" id="grouping" data-search="grouping candle leader box trend lines scale 3 7 13 19 29 49 structure">
+  <div class="section-label">Chapter 6</div>
+  <h2 class="section-title">Candle Grouping & Leader Candles</h2>
+  <p class="section-subtitle">See the market's structure at multiple zoom levels simultaneously.</p>
+
+  <h3 style="font-size:17px;font-weight:700;margin:28px 0 14px">What Are Grouping Boxes?</h3>
+  <p>The indicator draws transparent boxes showing the <strong>price range</strong> (highest high to lowest low) of the last 3, 7, 13, 19, 29, and 49 candles. These boxes nest inside each other like Russian dolls — the 3-bar box is the smallest and innermost, the 49-bar box is the largest and outermost.</p>
+  <div class="callout callout-info"><strong>Why this matters:</strong> Each box shows a different time horizon. The 3-bar box is very recent action. The 49-bar box is the broader structural range. When price approaches the edge of a larger box, it's reaching a significant structural boundary.</div>
+
+  <h3 style="font-size:17px;font-weight:700;margin:28px 0 14px">The 6 Scales</h3>
+  <div class="card-grid" style="grid-template-columns:repeat(3,1fr)">
+    <div class="card" style="text-align:center"><h3 style="font-size:24px;color:var(--cyan)">3</h3><p>Micro — immediate action</p></div>
+    <div class="card" style="text-align:center"><h3 style="font-size:24px;color:var(--cyan)">7</h3><p>Short-term swing</p></div>
+    <div class="card" style="text-align:center"><h3 style="font-size:24px;color:var(--cyan)">13</h3><p>Mid-short bridge</p></div>
+    <div class="card" style="text-align:center"><h3 style="font-size:24px;color:var(--cyan)">19</h3><p>Mid-term structure</p></div>
+    <div class="card" style="text-align:center"><h3 style="font-size:24px;color:var(--cyan)">29</h3><p>Long-term trend</p></div>
+    <div class="card" style="text-align:center"><h3 style="font-size:24px;color:var(--cyan)">49</h3><p>Macro structure</p></div>
+  </div>
+
+  <h3 style="font-size:17px;font-weight:700;margin:28px 0 14px">Leader Candles</h3>
+  <p>A <strong>Leader Candle</strong> merges all candles in a grouping period into a single composite candle — one OHLC candle that summarizes the entire group. Instead of seeing 7 noisy candles, you see one clear leader that shows the group's open, high, low, and close.</p>
+  <p>When leader candles are enabled, regular chart candles are hidden, giving you an uncluttered structural view of the market.</p>
+
+  <h3 style="font-size:17px;font-weight:700;margin:28px 0 14px">Leader Trend Lines</h3>
+  <p>Trend lines connecting the <strong>highs</strong> and <strong>lows</strong> of Leader 6 (49-bar group) to Leader 3 (13-bar group), projected forward into the future. These lines show the structural slope of the market — where the market is headed based on the relationship between the broad structure and the mid-term structure.</p>
+  <p>Lines lock after drawing and refresh on a configurable cycle (default: every 7 bars). Between refreshes, lines stay frozen as reference points.</p>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ CHAPTER: ALERTS ═══ -->
+<section class="section" id="alerts" data-search="alert notification trigger frequency once per bar close live spike trend conviction efficiency momentum volume scenario">
+  <div class="section-label">Chapter 7</div>
+  <h2 class="section-title">All Alerts</h2>
+  <p class="section-subtitle">54 configurable alerts across 5 categories. Every market state change, delivered to you.</p>
+
+  <div class="callout callout-warn"><strong>Alert frequency:</strong> Set all alerts to <strong>"Once Per Bar Close"</strong> — except L1 (Live Volume Spike) which should be set to <strong>"Once Per Bar"</strong> since it monitors the open bar.</div>
+
+  <h3 style="font-size:17px;font-weight:700;margin:28px 0 14px">Trend Engine Alerts (T01–T11)</h3>
+  <p>Fire when the trend state <strong>changes</strong> — not on every bar, only on transitions.</p>
+  <table class="alert-table">
+    <thead><tr><th>Code</th><th>Alert Name</th><th>What It Means</th></tr></thead>
+    <tbody>
+      <tr><td><code>T01</code></td><td>⚡ Bullish Reversal Confirmed</td><td>Two independent layers confirmed a bullish turn against the broader bearish structure. Highest-priority bullish signal.</td></tr>
+      <tr><td><code>T02</code></td><td>⚡ Bearish Reversal Confirmed</td><td>Two layers confirmed a bearish turn against the broader bullish structure. Highest-priority bearish signal.</td></tr>
+      <tr><td><code>T03</code></td><td>▲ Bullish Reversal Forming</td><td>Fastest scales turned bullish while the slowest are still bearish. Early warning — not yet confirmed.</td></tr>
+      <tr><td><code>T04</code></td><td>▼ Bearish Reversal Forming</td><td>Fastest scales turned bearish while the slowest are still bullish. Early bearish warning.</td></tr>
+      <tr><td><code>T05</code></td><td>▲▲ Strong Uptrend</td><td>5+ of 6 scales agree on bullish direction. Near-total upward consensus established.</td></tr>
+      <tr><td><code>T06</code></td><td>▼▼ Strong Downtrend</td><td>5+ of 6 scales agree on bearish direction. Near-total downward consensus.</td></tr>
+      <tr><td><code>T07</code></td><td>▲ Hidden Bullish Bias</td><td>Structural (longest) scales both turned bullish while short-term noise masks it.</td></tr>
+      <tr><td><code>T08</code></td><td>▼ Hidden Bearish Bias</td><td>Structural scales both turned bearish under the surface.</td></tr>
+      <tr><td><code>T09</code></td><td>▲ Uptrend Active</td><td>Majority (3–4) of scales agree on bullish direction.</td></tr>
+      <tr><td><code>T10</code></td><td>▼ Downtrend Active</td><td>Majority of scales agree on bearish direction.</td></tr>
+      <tr><td><code>T11</code></td><td>◆ No Clear Trend</td><td>Direction lost — scales disagree. Caution.</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="font-size:17px;font-weight:700;margin:28px 0 14px">Conviction Alerts (C1–C3)</h3>
+  <table class="alert-table">
+    <thead><tr><th>Code</th><th>Alert Name</th><th>What It Means</th></tr></thead>
+    <tbody>
+      <tr><td><code>C1</code></td><td>🔥 Conviction → HIGH</td><td>Powerful moves across multiple time horizons. Whatever signal is active, it has strong muscle behind it.</td></tr>
+      <tr><td><code>C2</code></td><td>Conviction → MODERATE</td><td>Normal move strength. Standard energy level.</td></tr>
+      <tr><td><code>C3</code></td><td>Conviction → LOW</td><td>Weak momentum. Signals are present but moves are timid.</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="font-size:17px;font-weight:700;margin:28px 0 14px">Efficiency Coupling Alerts (E01–E19)</h3>
+  <p>Fire when the combined efficiency + trend state changes.</p>
+  <table class="alert-table">
+    <thead><tr><th>Code</th><th>State</th><th>What It Means</th></tr></thead>
+    <tbody>
+      <tr><td><code>E01</code></td><td>⚡ BULL SURGE</td><td>Extreme efficiency backing the uptrend — explosive continuation.</td></tr>
+      <tr><td><code>E02</code></td><td>⚡ BEAR SURGE</td><td>Extreme efficiency backing the downtrend.</td></tr>
+      <tr><td><code>E03</code></td><td>BULL CONFIRMED</td><td>Strong efficiency supporting the uptrend.</td></tr>
+      <tr><td><code>E04</code></td><td>BEAR CONFIRMED</td><td>Strong efficiency supporting the downtrend.</td></tr>
+      <tr><td><code>E05</code></td><td>Bull Active</td><td>Normal efficiency in bullish direction.</td></tr>
+      <tr><td><code>E06</code></td><td>Bear Active</td><td>Normal efficiency in bearish direction.</td></tr>
+      <tr><td><code>E07</code></td><td>Bull Stalling</td><td>Weak efficiency despite uptrend — losing steam.</td></tr>
+      <tr><td><code>E08</code></td><td>Bear Stalling</td><td>Weak efficiency despite downtrend.</td></tr>
+      <tr><td><code>E09</code></td><td>⚠ STRONG BEAR COUNTER</td><td>Extreme bearish efficiency against the uptrend. Danger.</td></tr>
+      <tr><td><code>E10</code></td><td>⚠ STRONG BULL COUNTER</td><td>Extreme bullish efficiency against the downtrend.</td></tr>
+      <tr><td><code>E11</code></td><td>Bear Pressure</td><td>Strong bearish push against the uptrend.</td></tr>
+      <tr><td><code>E12</code></td><td>Bull Pressure</td><td>Strong bullish push against the downtrend.</td></tr>
+      <tr><td><code>E13</code></td><td>Mild Resistance</td><td>Moderate counter-move within an uptrend.</td></tr>
+      <tr><td><code>E14</code></td><td>Mild Support</td><td>Moderate counter-move within a downtrend.</td></tr>
+      <tr><td><code>E15</code></td><td>Noise</td><td>Negligible move against the trend.</td></tr>
+      <tr><td><code>E16</code></td><td>Extreme Move</td><td>Explosive move in a trendless market.</td></tr>
+      <tr><td><code>E17</code></td><td>Strong Move</td><td>Strong move without an established trend.</td></tr>
+      <tr><td><code>E18</code></td><td>Normal</td><td>Ordinary activity, no clear trend.</td></tr>
+      <tr><td><code>E19</code></td><td>Indecisive</td><td>Flat, directionless market.</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="font-size:17px;font-weight:700;margin:28px 0 14px">Efficiency Momentum Alerts (M1–M4)</h3>
+  <table class="alert-table">
+    <thead><tr><th>Code</th><th>State</th><th>What It Means</th></tr></thead>
+    <tbody>
+      <tr><td><code>M1</code></td><td>📈 Efficiency Accelerating</td><td>Move quality surging. Trend gaining power rapidly.</td></tr>
+      <tr><td><code>M2</code></td><td>Efficiency Sharpening</td><td>Move quality gradually improving. Healthy development.</td></tr>
+      <tr><td><code>M3</code></td><td>Efficiency Steady</td><td>No significant quality change. Stable.</td></tr>
+      <tr><td><code>M4</code></td><td>📉 Efficiency Fading</td><td>Move quality deteriorating. Watch for trend exhaustion.</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="font-size:17px;font-weight:700;margin:28px 0 14px">Volume Scenario Alerts (V01–V16)</h3>
+  <table class="alert-table">
+    <thead><tr><th>Code</th><th>Scenario</th><th>What It Means</th></tr></thead>
+    <tbody>
+      <tr><td><code>V01</code></td><td>⚡ Full Buy Confirmation</td><td>Extreme volume confirms the uptrend.</td></tr>
+      <tr><td><code>V02</code></td><td>⚡ Full Sell Confirmation</td><td>Extreme volume confirms the downtrend.</td></tr>
+      <tr><td><code>V03</code></td><td>✓ Healthy Buy Support</td><td>Solid volume supports the uptrend.</td></tr>
+      <tr><td><code>V04</code></td><td>✓ Healthy Sell Support</td><td>Solid volume supports the downtrend.</td></tr>
+      <tr><td><code>V05</code></td><td>◆ Weak Buy Support</td><td>Buying favors uptrend but volume is thin.</td></tr>
+      <tr><td><code>V06</code></td><td>◆ Weak Sell Support</td><td>Selling favors downtrend but volume is thin.</td></tr>
+      <tr><td><code>V07</code></td><td>⚠ Major Sell Counter</td><td>Extreme selling opposing the uptrend.</td></tr>
+      <tr><td><code>V08</code></td><td>⚠ Major Buy Counter</td><td>Extreme buying opposing the downtrend.</td></tr>
+      <tr><td><code>V09</code></td><td>⚠ Sell Pressure Growing</td><td>Significant selling against the uptrend.</td></tr>
+      <tr><td><code>V10</code></td><td>⚠ Buy Pressure Growing</td><td>Significant buying against the downtrend.</td></tr>
+      <tr><td><code>V11</code></td><td>◇ Normal Correction</td><td>Minor counter-move. Noise.</td></tr>
+      <tr><td><code>V12</code></td><td>💥 Breakout Candidate</td><td>Extreme one-sided volume, no trend yet.</td></tr>
+      <tr><td><code>V13</code></td><td>● Dead Market</td><td>No meaningful volume from either side.</td></tr>
+      <tr><td><code>V14</code></td><td>⚠ Volume Divergence</td><td>Trend continues but volume declining.</td></tr>
+      <tr><td><code>V15</code></td><td>🔍 Quiet Accumulation</td><td>Quiet buying near lows — possible positioning.</td></tr>
+      <tr><td><code>V16</code></td><td>🔍 Quiet Distribution</td><td>Quiet selling near highs — possible unwinding.</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="font-size:17px;font-weight:700;margin:28px 0 14px">Live Volume Spike (L1)</h3>
+  <div class="signal-card" style="border-color:var(--red)">
+    <div class="signal-header"><span class="tag tag-red">🔴 LIVE: Volume Spike</span></div>
+    <div class="signal-desc">
+      <p>This is the <strong>only alert that monitors the current open bar</strong>. It fires when the live bar's volume is more than 2× the previous bar AND ranks in the top 5% of the last 49 bars.</p>
+      <p style="margin-top:8px"><strong>Important:</strong> Set this alert's frequency to <strong>"Once Per Bar"</strong> (not "Once Per Bar Close") because it monitors real-time data. Values may fluctuate while the bar is open — once the bar closes, everything locks permanently.</p>
+    </div>
+  </div>
+
+  <h3 style="font-size:17px;font-weight:700;margin:28px 0 14px">Alert Message Content</h3>
+  <p>Every alert message includes: the symbol name, timeframe, the signal description, the current alignment or efficiency or volume rank value, the price, and the timestamp. You can use these in TradingView's alert notification templates.</p>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ CHAPTER: SETTINGS ═══ -->
+<section class="section" id="settings" data-search="settings input option configuration font size position mobile tier language color transparency leader candle box trend line refresh extension style width volume method intrabar timeframe footprint ticks value area">
+  <div class="section-label">Chapter 8</div>
+  <h2 class="section-title">Settings Reference</h2>
+  <p class="section-subtitle">Every input option explained — know exactly what each setting does.</p>
+
+  <h3 style="font-size:16px;font-weight:700;margin:24px 0 12px">Access Tier</h3>
+  <div class="setting-item"><h4>Subscription Plan <span class="setting-default">Default: Basic (Free)</span></h4><p>Select your TradingView plan to unlock corresponding features. Options: Basic (Free), Essential and Plus, Premium and Ultimate. Each higher tier includes all features from tiers below it.</p></div>
+
+  <h3 style="font-size:16px;font-weight:700;margin:24px 0 12px">Dashboard</h3>
+  <div class="setting-item"><h4>Font Size <span class="setting-default">Default: 12</span></h4><p>Text size of the dashboard panel. Range: 6–50. Lower = compact, higher = more prominent.</p></div>
+  <div class="setting-item"><h4>Position <span class="setting-default">Default: Top Right</span></h4><p>Where the dashboard appears on your chart. 9 positions available (Top/Middle/Bottom × Left/Center/Right).</p></div>
+  <div class="setting-item"><h4>Mobile Dashboard <span class="setting-default">Default: Off</span></h4><p>Replaces the full desktop panel with a slim 5-row mobile version showing only the most actionable data.</p></div>
+  <div class="setting-item"><h4>Mobile Font Size <span class="setting-default">Default: 6</span></h4><p>Text size for the mobile dashboard. Default 6 is the smallest possible to maximize screen space on phones.</p></div>
+  <div class="setting-item"><h4>Dashboard Language <span class="setting-default">Default: English</span></h4><p>Display language for all dashboard text, labels, and narratives. Options: English, Türkçe, العربية. Input settings and alert messages remain in English.</p></div>
+
+  <h3 style="font-size:16px;font-weight:700;margin:24px 0 12px">Candle Grouping</h3>
+  <div class="setting-item"><h4>Box Color <span class="setting-default">Default: Purple (#9d4e9d)</span></h4><p>Color for all grouping boxes.</p></div>
+  <div class="setting-item"><h4>Box Transparency <span class="setting-default">Default: 90</span></h4><p>Transparency of grouping boxes. 0 = fully opaque, 100 = invisible.</p></div>
+  <div class="setting-item"><h4>Show Leader Candles <span class="setting-default">Default: On</span></h4><p>Display composite leader candles at the center of each grouping period. When active, regular chart candles are hidden for a clean structural view.</p></div>
+
+  <h3 style="font-size:16px;font-weight:700;margin:24px 0 12px">Leader Trend Lines</h3>
+  <div class="setting-item"><h4>Show Leader Trend Lines <span class="setting-default">Default: On</span></h4><p>Enable structural trend lines connecting the broad-scale and mid-scale leader candle highs/lows with forward projection.</p></div>
+  <div class="setting-item"><h4>Refresh Cycle (bars) <span class="setting-default">Default: 7</span></h4><p>How many confirmed bars between trend line recalculations. Lines stay frozen between refreshes. Lower = more updates, higher = more stable reference.</p></div>
+  <div class="setting-item"><h4>Forward Extension (bars) <span class="setting-default">Default: 14</span></h4><p>How many bars forward the trend lines project beyond their anchor point.</p></div>
+  <div class="setting-item"><h4>High Line Color <span class="setting-default">Default: Green (#06d6a0)</span></h4><p>Color for the upper trend line (connecting highs).</p></div>
+  <div class="setting-item"><h4>Low Line Color <span class="setting-default">Default: Red (#ef476f)</span></h4><p>Color for the lower trend line (connecting lows).</p></div>
+  <div class="setting-item"><h4>Line Style <span class="setting-default">Default: Solid</span></h4><p>Visual style: Solid, Dashed, or Dotted.</p></div>
+  <div class="setting-item"><h4>Line Width <span class="setting-default">Default: 2</span></h4><p>Thickness of the trend lines. Range: 1–5.</p></div>
+
+  <h3 style="font-size:16px;font-weight:700;margin:24px 0 12px">Trend Engine</h3>
+  <div class="setting-item"><h4>Show Trend Engine Row <span class="setting-default">Default: On</span></h4><p>Toggle the trend engine section in the dashboard. The engine always runs internally — this only controls display.</p></div>
+
+  <h3 style="font-size:16px;font-weight:700;margin:24px 0 12px">Candle Efficiency</h3>
+  <div class="setting-item"><h4>Show Efficiency Row <span class="setting-default">Default: On</span></h4><p>Toggle the move quality section in the dashboard.</p></div>
+
+  <h3 style="font-size:16px;font-weight:700;margin:24px 0 12px">Volume Decomposition</h3>
+  <div class="setting-item"><h4>Show Volume Row <span class="setting-default">Default: On</span></h4><p>Toggle the volume decomposition section in the dashboard.</p></div>
+  <div class="setting-item"><h4>Volume Method <span class="setting-default">Default: Geometry</span></h4><p>How volume is split into buy/sell. Geometry works on all plans. Intrabar uses lower-timeframe data — requires Essential+.</p></div>
+  <div class="setting-item"><h4>Intrabar Timeframe <span class="setting-default">Default: 1 (minute)</span></h4><p>Timeframe used for intrabar volume classification. 1 minute recommended. Only used when Intrabar method is selected.</p></div>
+
+  <h3 style="font-size:16px;font-weight:700;margin:24px 0 12px">Volume Footprint</h3>
+  <div class="setting-item"><h4>Footprint Method <span class="setting-default">Default: Geometry</span></h4><p>How volume is distributed across price levels. Geometry works on all plans. Native uses real tick-level data — requires Premium+.</p></div>
+  <div class="setting-item"><h4>Ticks Per Row (Native only) <span class="setting-default">Default: 1</span></h4><p>Price granularity of the native footprint. Each row covers this many ticks (smallest price increment). Lower = finer detail.</p></div>
+  <div class="setting-item"><h4>Value Area % (Native only) <span class="setting-default">Default: 70</span></h4><p>Percentage of total volume used to calculate the Value Area. Standard is 70%.</p></div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ CHAPTER: GLOSSARY ═══ -->
+<section class="section" id="glossary" data-search="glossary term definition vocabulary dictionary explain meaning">
+  <div class="section-label">Chapter 9</div>
+  <h2 class="section-title">Glossary</h2>
+  <p class="section-subtitle">Every term used in this indicator, defined in plain language.</p>
+
+  <div class="accordion"><button class="accordion-trigger" onclick="toggleAcc(this)" aria-expanded="false"><span class="acc-icon">📘</span>Alignment Score<span class="acc-arrow">▼</span></button><div class="accordion-body"><div class="accordion-content"><p>A number from −6 to +6 showing how many of the 6 analysis scales agree on direction. +6 = all bullish, −6 = all bearish, 0 = total disagreement.</p></div></div></div>
+
+  <div class="accordion"><button class="accordion-trigger" onclick="toggleAcc(this)" aria-expanded="false"><span class="acc-icon">📘</span>Cascade (Reversal Confirmed)<span class="acc-arrow">▼</span></button><div class="accordion-body"><div class="accordion-content"><p>The strongest reversal signal. Fires when the short-term AND mid-term scales both independently turn against the long-term direction. Two separate confirmations of the turn.</p></div></div></div>
+
+  <div class="accordion"><button class="accordion-trigger" onclick="toggleAcc(this)" aria-expanded="false"><span class="acc-icon">📘</span>Choppy<span class="acc-arrow">▼</span></button><div class="accordion-body"><div class="accordion-content"><p>A market condition where price moves back and forth without making progress in any direction. Efficiency below 20%. Like running on a treadmill — lots of movement, zero displacement. Trading in choppy conditions is risky because there's no directional edge.</p></div></div></div>
+
+  <div class="accordion"><button class="accordion-trigger" onclick="toggleAcc(this)" aria-expanded="false"><span class="acc-icon">📘</span>Conviction<span class="acc-arrow">▼</span></button><div class="accordion-body"><div class="accordion-content"><p>How strong the moves behind a signal are — not just the direction, but the power. HIGH conviction means the moves across multiple time horizons are large and decisive. LOW conviction means the direction may be right but the energy is weak.</p></div></div></div>
+
+  <div class="accordion"><button class="accordion-trigger" onclick="toggleAcc(this)" aria-expanded="false"><span class="acc-icon">📘</span>Delta (Volume)<span class="acc-arrow">▼</span></button><div class="accordion-body"><div class="accordion-content"><p>Buy Volume minus Sell Volume. A positive delta means buyers put in more volume than sellers on that candle. Negative delta means sellers dominated. It's the simplest measure of who won the battle on each bar.</p></div></div></div>
+
+  <div class="accordion"><button class="accordion-trigger" onclick="toggleAcc(this)" aria-expanded="false"><span class="acc-icon">📘</span>Divergence (Reversal Forming)<span class="acc-arrow">▼</span></button><div class="accordion-body"><div class="accordion-content"><p>An early-warning reversal signal. The fastest scales (3 and 7-bar) have turned in one direction while the slowest scales (29 and 49-bar) still point the other way. The structure is starting to crack from the inside — but not yet confirmed.</p></div></div></div>
+
+  <div class="accordion"><button class="accordion-trigger" onclick="toggleAcc(this)" aria-expanded="false"><span class="acc-icon">📘</span>Efficiency<span class="acc-arrow">▼</span></button><div class="accordion-body"><div class="accordion-content"><p>The percentage of a candle group's total motion that became directional displacement. 100% = every bit of movement went in one direction (pure trend). 0% = the market moved a lot but ended exactly where it started (pure noise). A fundamental measure of move quality.</p></div></div></div>
+
+  <div class="accordion"><button class="accordion-trigger" onclick="toggleAcc(this)" aria-expanded="false"><span class="acc-icon">📘</span>Footprint<span class="acc-arrow">▼</span></button><div class="accordion-body"><div class="accordion-content"><p>A way of viewing volume not just as a total number, but distributed across each price level within a period. Shows WHERE the volume happened, not just how much. Reveals support, resistance, and fair value at specific prices.</p></div></div></div>
+
+  <div class="accordion"><button class="accordion-trigger" onclick="toggleAcc(this)" aria-expanded="false"><span class="acc-icon">📘</span>Grouping Scale<span class="acc-arrow">▼</span></button><div class="accordion-body"><div class="accordion-content"><p>The indicator analyzes 6 different time horizons simultaneously: 3, 7, 13, 19, 29, and 49 bars. Each is called a "scale" or "grouping period." Small scales react fast (noisy), large scales react slow (smooth, structural).</p></div></div></div>
+
+  <div class="accordion"><button class="accordion-trigger" onclick="toggleAcc(this)" aria-expanded="false"><span class="acc-icon">📘</span>Hidden Bias<span class="acc-arrow">▼</span></button><div class="accordion-body"><div class="accordion-content"><p>When the biggest structural scales (29 and 49-bar) both agree on a direction, but the short-term noise makes the overall alignment look neutral. The structural lean is real but hidden from surface-level analysis.</p></div></div></div>
+
+  <div class="accordion"><button class="accordion-trigger" onclick="toggleAcc(this)" aria-expanded="false"><span class="acc-icon">📘</span>Leader Candle<span class="acc-arrow">▼</span></button><div class="accordion-body"><div class="accordion-content"><p>A composite candle that merges all candles in a grouping period into a single OHLC candle. Simplifies the chart by replacing many small candles with one summary candle that shows the group's true structural character.</p></div></div></div>
+
+  <div class="accordion"><button class="accordion-trigger" onclick="toggleAcc(this)" aria-expanded="false"><span class="acc-icon">📘</span>Macro Bias<span class="acc-arrow">▼</span></button><div class="accordion-body"><div class="accordion-content"><p>Same as Hidden Bias — the largest time horizons agree on direction even when the overall picture is unclear. A structural signal hidden beneath short-term noise.</p></div></div></div>
+
+  <div class="accordion"><button class="accordion-trigger" onclick="toggleAcc(this)" aria-expanded="false"><span class="acc-icon">📘</span>Point of Control (POC)<span class="acc-arrow">▼</span></button><div class="accordion-body"><div class="accordion-content"><p>The single price level where the most total volume traded within a grouping period. The "fair value" — the price most participants agreed on. POC levels act as magnets: price tends to return to them.</p></div></div></div>
+
+  <div class="accordion"><button class="accordion-trigger" onclick="toggleAcc(this)" aria-expanded="false"><span class="acc-icon">📘</span>Repaint<span class="acc-arrow">▼</span></button><div class="accordion-body"><div class="accordion-content"><p>When an indicator changes its past values after they were already displayed. A repainting indicator might show a "Buy" signal on a historical bar that wasn't actually there when that bar was live. <strong>This indicator does NOT repaint.</strong> All signals lock on bar close and never change. The only exception is the Live Volume Spike alert (L1), which monitors the current open bar by design — and its values lock once the bar closes.</p></div></div></div>
+
+  <div class="accordion"><button class="accordion-trigger" onclick="toggleAcc(this)" aria-expanded="false"><span class="acc-icon">📘</span>Trend Coupling<span class="acc-arrow">▼</span></button><div class="accordion-body"><div class="accordion-content"><p>The process of combining efficiency (move quality) with the active trend direction. A strong move in the trend's direction = "confirmed." A strong move against the trend = "counter-pressure." This gives you context that raw efficiency alone can't provide.</p></div></div></div>
+
+  <div class="accordion"><button class="accordion-trigger" onclick="toggleAcc(this)" aria-expanded="false"><span class="acc-icon">📘</span>Value Area<span class="acc-arrow">▼</span></button><div class="accordion-body"><div class="accordion-content"><p>The price range containing a specified percentage (default 70%) of the total volume. If 70% of all volume traded between $84.00 and $86.00, that range is the Value Area. Price tends to stay within or return to the Value Area. Available with the Native footprint method only.</p></div></div></div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ CHAPTER: FAQ ═══ -->
+<section class="section" id="faq" data-search="faq question answer repaint market timeframe dash blank geometry intrabar native help troubleshoot">
+  <div class="section-label">Chapter 10</div>
+  <h2 class="section-title">FAQ & Troubleshooting</h2>
+  <p class="section-subtitle">Common questions and solutions.</p>
+
+  <div class="accordion"><button class="accordion-trigger" onclick="toggleAcc(this)" aria-expanded="false"><span class="acc-icon">❓</span>Does this indicator repaint?<span class="acc-arrow">▼</span></button><div class="accordion-body"><div class="accordion-content"><p><strong>No.</strong> All calculations and signals are anchored at the last closed bar. Once a bar closes, nothing changes — colors, labels, values, everything locks permanently. The only exception is the <strong>Live Volume Spike alert (L1)</strong>, which monitors the current open bar by design. Even this value locks the moment the bar closes.</p></div></div></div>
+
+  <div class="accordion"><button class="accordion-trigger" onclick="toggleAcc(this)" aria-expanded="false"><span class="acc-icon">❓</span>What markets does it work on?<span class="acc-arrow">▼</span></button><div class="accordion-body"><div class="accordion-content"><p>Any instrument available on TradingView — stocks, forex, crypto, commodities, indices, futures. The indicator automatically adjusts to each instrument's characteristics.</p></div></div></div>
+
+  <div class="accordion"><button class="accordion-trigger" onclick="toggleAcc(this)" aria-expanded="false"><span class="acc-icon">❓</span>What timeframe should I use?<span class="acc-arrow">▼</span></button><div class="accordion-body"><div class="accordion-content"><p>The indicator is <strong>multi-timeframe by design</strong> — it works on any timeframe. It analyzes 6 different scales internally regardless of your chart timeframe. Use whatever timeframe matches your trading style.</p></div></div></div>
+
+  <div class="accordion"><button class="accordion-trigger" onclick="toggleAcc(this)" aria-expanded="false"><span class="acc-icon">❓</span>Why do I see "—" in some dashboard cells?<span class="acc-arrow">▼</span></button><div class="accordion-body"><div class="accordion-content"><p>This means there isn't enough bar history yet. The 49-bar scale needs at least 49 closed bars to produce a value. As more bars load, the values will populate. This is normal on newly loaded charts.</p></div></div></div>
+
+  <div class="accordion"><button class="accordion-trigger" onclick="toggleAcc(this)" aria-expanded="false"><span class="acc-icon">❓</span>Geometry vs Intrabar — which volume method should I use?<span class="acc-arrow">▼</span></button><div class="accordion-body"><div class="accordion-content"><p><strong>Geometry</strong> is the default and works on all plans. It provides a solid estimate. <strong>Intrabar</strong> is more precise but requires an Essential or higher TradingView plan and uses lower-timeframe data. If your plan supports it and you want higher accuracy, use Intrabar. Otherwise, Geometry is perfectly adequate.</p></div></div></div>
+
+  <div class="accordion"><button class="accordion-trigger" onclick="toggleAcc(this)" aria-expanded="false"><span class="acc-icon">❓</span>Geometry vs Native footprint — which should I use?<span class="acc-arrow">▼</span></button><div class="accordion-body"><div class="accordion-content"><p><strong>Geometry</strong> estimates volume distribution and works on all plans. <strong>Native</strong> uses real tick-level data for maximum precision but requires a Premium or Ultimate TradingView plan. If you have access, Native gives you the most accurate footprint data.</p></div></div></div>
+
+  <div class="accordion"><button class="accordion-trigger" onclick="toggleAcc(this)" aria-expanded="false"><span class="acc-icon">❓</span>How do I set up alerts properly?<span class="acc-arrow">▼</span></button><div class="accordion-body"><div class="accordion-content"><p>1. Click the alert bell on TradingView. 2. Select the indicator. 3. Choose your desired condition (e.g., "T01 ⚡ Bullish Reversal Confirmed"). 4. Set frequency to <strong>"Once Per Bar Close"</strong> for all alerts except L1. 5. For L1 (Live Volume Spike), set frequency to <strong>"Once Per Bar"</strong>. 6. Configure your notification method (popup, email, webhook, etc.).</p></div></div></div>
+
+  <div class="accordion"><button class="accordion-trigger" onclick="toggleAcc(this)" aria-expanded="false"><span class="acc-icon">❓</span>What does the mobile dashboard show vs desktop?<span class="acc-arrow">▼</span></button><div class="accordion-body"><div class="accordion-content"><p>The desktop dashboard shows all active modules in full detail. The mobile dashboard is a condensed 5-row version showing only the most actionable data: trend direction and state, move quality, and volume pressure. Enable mobile mode in settings when trading on a phone.</p></div></div></div>
+
+  <div class="accordion"><button class="accordion-trigger" onclick="toggleAcc(this)" aria-expanded="false"><span class="acc-icon">❓</span>Is this a signal bot?<span class="acc-arrow">▼</span></button><div class="accordion-body"><div class="accordion-content"><p><strong>No.</strong> This is a structural analysis tool. It shows you the current state of trend, efficiency, and volume — but the trading decision is always yours. It gives you the information; you decide what to do with it.</p></div></div></div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══ ABOUT ═══ -->
+<section class="section" id="about" data-search="about ata sabanci profile contact tradingview twitter X">
+  <div class="section-label">About</div>
+  <h2 class="section-title">Ata Sabancı</h2>
+  <p class="section-subtitle">International affairs & market structure analyst.</p>
+  <p><em>"Uncovering hidden market depth through Volume Dynamics & Data-Driven Logic."</em></p>
+  <div style="display:flex;gap:12px;margin-top:20px;flex-wrap:wrap">
+    <a href="https://www.tradingview.com/u/ata_sabanci/#published-scripts" target="_blank" rel="noopener" class="btn-tv">TradingView Profile</a>
+    <a href="https://www.tradingview.com/script/EDyXsADY-Smart-Trader-SNIF-OFF-5-1-Trade-Finder-By-Ata-Sabanci/" target="_blank" rel="noopener" class="btn-outline">Get the Indicator</a>
+    <a href="https://x.com/sabanci_ata" target="_blank" rel="noopener" class="btn-outline">𝕏 @sabanci_ata</a>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="site-footer">
+  <div class="footer-links">
+    <a href="https://www.tradingview.com/u/ata_sabanci/#published-scripts" target="_blank" rel="noopener">TradingView Profile</a>
+    <a href="https://www.tradingview.com/script/EDyXsADY-Smart-Trader-SNIF-OFF-5-1-Trade-Finder-By-Ata-Sabanci/" target="_blank" rel="noopener">Indicator Page</a>
+    <a href="https://x.com/sabanci_ata" target="_blank" rel="noopener">𝕏 Twitter</a>
+  </div>
+  <p>Smart Trader — SNIF-OFF 5.1, Trade Finder · By Ata Sabancı</p>
+  <p style="margin-top:8px;font-size:11px;color:var(--text-muted)">This indicator is designed for educational and analytical purposes. It is not financial advice. All trading involves risk. Always do your own research.</p>
+</footer>
+
+</div>
+</main>
+
+<script>
+// ── Sidebar toggle (mobile) ──
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+  document.querySelector('.sidebar-overlay').classList.toggle('show');
+}
+
+// ── Accordion ──
+function toggleAcc(btn){
+  const body=btn.nextElementSibling;
+  const expanded=btn.getAttribute('aria-expanded')==='true';
+  btn.setAttribute('aria-expanded',!expanded);
+  if(!expanded){body.classList.add('open')}else{body.classList.remove('open')}
+}
+
+// ── Active nav link ──
+const navLinks=document.querySelectorAll('.nav-link');
+const sections=document.querySelectorAll('.section, .hero');
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const id=e.target.id;
+      navLinks.forEach(l=>{l.classList.toggle('active',l.getAttribute('href')==='#'+id)});
+    }
+  });
+},{rootMargin:'-80px 0px -60% 0px',threshold:0});
+sections.forEach(s=>{if(s.id)observer.observe(s)});
+
+// ── Search / filter ──
+function filterSections(query){
+  const q=query.toLowerCase().trim();
+  const allSections=document.querySelectorAll('.section');
+  const dividers=document.querySelectorAll('.divider');
+  if(!q){
+    allSections.forEach(s=>s.classList.remove('hidden'));
+    dividers.forEach(d=>d.style.display='');
+    return;
+  }
+  allSections.forEach(s=>{
+    const searchData=(s.getAttribute('data-search')||'')+' '+s.textContent.toLowerCase();
+    const match=searchData.includes(q);
+    s.classList.toggle('hidden',!match);
+  });
+  dividers.forEach(d=>{
+    const next=d.nextElementSibling;
+    if(next&&next.classList.contains('hidden')){d.style.display='none'}else{d.style.display=''}
+  });
+}
+
+// ── Close sidebar on nav click (mobile) ──
+navLinks.forEach(l=>{l.addEventListener('click',()=>{
+  if(window.innerWidth<=900){toggleSidebar()}
+})});
+</script>
+</body>
+</html>
